@@ -1,4 +1,4 @@
-import { UserCard } from '@/components/UserCard'
+// import { UserCard } from '@/components/UserCard'
 import clsx from 'clsx'
 import { LogOut, PlusCircle } from 'lucide-react'
 import { Inter } from 'next/font/google'
@@ -32,7 +32,7 @@ export default function Home() {
   const [usersInRoom, setUsersInRoom] = useState<CompletedUser[]>([])
   const [firstName, lastName] = user?.username.split(' ') || ['', '']
   const abbreviationUserName = `${firstName?.[0]}${lastName?.[0] ?? ''}`
-  const [votes, setVotes] = useState<any>([])
+  const [, setVotes] = useState<any>([])
 
   const socketInitializer = async () => {
     await fetch('/api/socket')
@@ -44,7 +44,6 @@ export default function Home() {
   }
 
   const enterRoom = useCallback(() => {
-    // const room = Math.floor(Math.random() * 899999 + 100000).toString()
     if (socket && room && user?.username) {
       socket.emit('enter_room', { room, username: user?.username })
     }
