@@ -1,10 +1,12 @@
 import { Inter } from 'next/font/google'
 import { useRouter } from 'next/router'
+import { v4 as uuidV4 } from 'uuid'
 import { FormEvent, useCallback, useEffect, useState } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 interface User {
   username: string
+  id: string
 }
 
 export default function Home() {
@@ -25,6 +27,7 @@ export default function Home() {
     event.preventDefault()
     const { username } = event.currentTarget
     const createdUser: User = {
+      id: uuidV4(),
       username: username.value,
     }
     setUser(createdUser)
@@ -46,10 +49,10 @@ export default function Home() {
 
   return (
     <main
-      className={`flex flex-col gap-10 h-screen w-screen items-center justify-center ${inter.className}`}
+      className={`flex h-screen w-screen flex-col items-center justify-center gap-10 ${inter.className}`}
     >
       <div className="flex flex-col items-center">
-        <h1 className="font-black text-4xl text-slate-800">
+        <h1 className="text-4xl font-black text-slate-800">
           <span className="text-blue-800">P</span>Scrum
         </h1>
         <span className="text-slate-800">
@@ -57,18 +60,29 @@ export default function Home() {
         </span>
       </div>
       {user ? (
-        <button>Criar nova sala</button>
+        <div className="flex max-w-[320px] flex-col items-center gap-4">
+          <h3 className="flex w-full flex-col items-center truncate text-2xl font-bold text-slate-800">
+            Olá, <span className="text-xl font-medium">{user.username}</span>
+          </h3>
+          <button
+            type="submit"
+            onClick={createRoom}
+            className="rounded-lg bg-slate-800 p-2 text-white transition hover:bg-slate-700"
+          >
+            Criar nova sala
+          </button>
+        </div>
       ) : (
         <form onSubmit={onSubmit} className="flex flex-col gap-2">
           <input
             type="text"
             name="username"
             placeholder="Digite o seu nome"
-            className="w-full p-2 rounded"
+            className="w-full rounded p-2"
           />
           <button
             type="submit"
-            className="w-full p-2 bg-slate-800 rounded text-white hover:bg-slate-700 transition active:bg-slate-700"
+            className="w-full rounded bg-slate-800 p-2 text-white transition hover:bg-slate-700 active:bg-slate-700"
           >
             Criar sala
           </button>
