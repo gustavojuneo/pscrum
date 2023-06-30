@@ -62,30 +62,30 @@ export default function Home() {
   }
 
   const socketInitializer = async () => {
-    await fetch('/api/socket')
-    socket = io({
-      path: '/api/socket',
-    })
+    const socketApi = process.env.SOCKET_API
+    if (socketApi) {
+      socket = io(socketApi)
 
-    enterRoom()
+      enterRoom()
 
-    socket.on('vote', (data) => {
-      console.log('vote >>>', data)
-      setVotes((prevState: any) => [...prevState, data])
-    })
+      socket.on('vote', (data) => {
+        console.log('vote >>>', data)
+        setVotes((prevState: any) => [...prevState, data])
+      })
 
-    socket.on('room_data', (data: RoomData) => {
-      setUsersInRoom(data.users)
-      setCurrentTask(data.currentTask)
-      setTasksHistory(data.room.tasks)
-    })
+      socket.on('room_data', (data: RoomData) => {
+        setUsersInRoom(data.users)
+        setCurrentTask(data.currentTask)
+        setTasksHistory(data.room.tasks)
+      })
 
-    socket.on('user_disconnected', (data) => {
-      const newUsersInRoom = usersInRoom.filter(
-        (user) => user.socket_id !== data.socket_id,
-      )
-      setUsersInRoom(newUsersInRoom)
-    })
+      socket.on('user_disconnected', (data) => {
+        const newUsersInRoom = usersInRoom.filter(
+          (user) => user.socket_id !== data.socket_id,
+        )
+        setUsersInRoom(newUsersInRoom)
+      })
+    }
   }
 
   const handleVote = (voteValue: number) => {
