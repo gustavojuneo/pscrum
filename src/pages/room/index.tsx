@@ -6,7 +6,7 @@ import { FormEvent, useCallback, useEffect, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { v4 as uuidV4 } from 'uuid'
 import { UserCard } from '@/components/UserCard'
-import * as Modal from '@/components/Modal'
+import { Modal } from '@/components/Modal'
 import clsx from 'clsx'
 
 const inter = Inter({ subsets: ['latin'] })
