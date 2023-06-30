@@ -62,10 +62,8 @@ export default function Home() {
   }
 
   const socketInitializer = async () => {
-    await fetch('/api/socket')
-    socket = io({
-      path: '/api/socket',
-    })
+    await fetch('https://pscrum.vercel.app/api/socket')
+    socket = io('https://pscrum.vercel.app/api/socket')
 
     enterRoom()
 
