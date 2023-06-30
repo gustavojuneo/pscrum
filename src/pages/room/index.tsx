@@ -63,6 +63,7 @@ export default function Home() {
 
   const socketInitializer = async () => {
     const socketApi = process.env.SOCKET_API
+    console.log('socket api >>>', socketApi)
     if (socketApi) {
       socket = io(socketApi)
 
