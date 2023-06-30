@@ -44,9 +44,9 @@ export default function handler(req: Request, res: any) {
   res.socket.server.io = io
 
   io.on('connection', (socket: any) => {
+    console.log('users >>>', users)
     socket.on('enter_room', (data: any) => {
       const user: User = data.user
-      console.log('users >>>', users)
       const room: Room = rooms.find((r) => r.code === data.roomCode) || {
         code: data.roomCode,
         scrumMaster: user.id,
